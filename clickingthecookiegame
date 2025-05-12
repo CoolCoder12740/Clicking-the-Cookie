@@ -1,43 +1,96 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, TouchableHighlight, StyleSheet, Image } from 'react-native';
+import { AppRegistry, Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ImageBackground, TouchableHighlight, Alert, Dimensions, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
+
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
+
 
 export default class App extends Component {
    state = {
         count: 0,
+        mainDisplay: 'block',
+        menuDisplay: 'none',
+        cookie: ''
     }
     
     increaseCount = () => {
         this.setState({ 
             count: this.state.count + 1,
         })
-    }
+    };
+    
+    handleMainDisplayPress = () => this.setState(state => ({
+        mainDisplay: 'block',
+        menuDisplay: 'none',
+    }));
+    
+    handleMenuDisplayPress = () => this.setState(state => ({
+        mainDisplay: 'none',
+        menuDisplay: 'block',
+    }));
     
 
     render() {
         return (
             <View style={styles.container}>
-            
-              
-                <TouchableHighlight
-                    onPress = {this.increaseCount}
-                >
-                   
-                      <Image
-                    source={{ uri: 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c' }}
-                    style={{ height: 200, width: 200 }}
-                     onPress = {this.increaseCount}
-                />
-        
+                
+                <View style={{ display: this.state.mainDisplay }}>
+                    <View style={styles.cookieContainer}>
+                        <Text style={styles.title}>
+                            Clicking the Cookie 
+                        </Text>
+                    
+                      
+                        <TouchableHighlight
+                            onPress = {this.increaseCount}
+                        >
+                           
+                              <Image
+                            source={{ uri: 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c' }}
+                            style={{ height: 200, width: 200 }}
+                             onPress = {this.increaseCount}
+                        />
+                
+                       
+                        </TouchableHighlight>
+                        
                
-                </TouchableHighlight>
-                
-       
-                
-                <Text style={styles.paragraph}>
-                    {this.state.count}
-                </Text>
-                
+                        
+                        <Text style={styles.paragraph}>
+                            {this.state.count}
+                        </Text>
+                    </View>    
+                </View>
+                <View style={{ display: this.state.menuDisplay }}>
+                    <View style={styles.cookieContainer}>
+                        <Text style={styles.text}>
+                            Cookies Pressed: {this.state.count}
+                         </Text>
+                         <Text style={styles.text}>
+                            Time Played:
+                        </Text>
+                        <Text style={styles.text}>
+                            Cookies Clicked per Hour:
+                        </Text>
+                    </View>
+                </View>
+               <View style={styles.navbarContainer}>
+                    <TouchableHighlight style={styles.navButton}
+                    onPress={this.handleMainDisplayPress}
+                    >
+                        <Text style={styles.navButtonText}>
+                            blah blah
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.navButton}
+                    onPress={this.handleMenuDisplayPress}
+                    >
+                        <Text style={styles.navButtonText}>
+                            blah 
+                        </Text>
+                    </TouchableHighlight>
+                </View>
             </View>
       );
    }
@@ -50,20 +103,58 @@ export default class App extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    navbarContainer: {
+        width: deviceWidth,
+        height: deviceHeight/8,
+        backgroundColor: 'lightBlue',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    cookieContainer: {
+        width: deviceWidth,
+        height: 7 * deviceHeight/8,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'lightgray',
     },
-    button: {
+    navButton: {
+        height: deviceHeight/14,
+        width: deviceWidth/4,
+        backgroundColor: 'white',
+        borderColor: 'green',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20,
+    },
+     navButtonText: {
+        fontSize: deviceHeight/40,
+        textAlign: 'center',
+        color: 'red',
+    },
+    cookie: {
         height: 50,
         width: 150,
         backgroundColor: 'black',
         alignItems: 'center',
         justifyContent: 'center',
     },
+    title: {
+        color: 'teal',
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
     buttonText: {
         color: 'teal',
         fontSize: 25,
+    },
+    text: {
+        color: 'black',
+        fontSize: 20,
+        justifyContent: 'center',
+        padding: 10,
     },
     paragraph: {
         color: 'teal',
