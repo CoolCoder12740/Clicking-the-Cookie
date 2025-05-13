@@ -13,6 +13,7 @@ export default class App extends Component {
         mainDisplay: 'block',
         menuDisplay: 'none',
         cookie: 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c',
+        multiplier: 'x1',
     }
     
     increaseCount = () => {
@@ -51,24 +52,30 @@ export default class App extends Component {
             
         let newCount = count + increment;
         let newLevel = 1;
+        let newMultiplier = 'x1';
         let newCookie = 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c';
         if (newCount > 300) {
             newLevel = 5;
+            newMultiplier = 'x15';
             newCookie = 'https://www.freepnglogos.com/uploads/cookie-png/cookie-png-images-are-download-crazypngm-21.png';
         } else if (newCount > 125) {
             newLevel = 4;
+            newMultiplier = 'x10';
             newCookie = 'https://static.vecteezy.com/system/resources/previews/054/314/888/non_2x/oreo-golden-crispy-cookie-free-png.png';
         } else if (newCount > 50) {
             newLevel = 3;
+            newMultiplier = 'x6';
             newCookie = 'https://icon2.cleanpng.com/lnd/20240906/ts/abd7957c6eaaa7d2d4af252689ef23.webp';
         } else if (newCount > 10) {
             newLevel = 2;
+             newMultiplier = 'x2';
             newCookie = 'https://www.sweetestmenu.com/wp-content/uploads/2019/03/whitechocolatechipcookies37aa.jpg';
         }
         this.setState({
             count: newCount,
             level: newLevel,
-            cookie: newCookie
+            cookie: newCookie,
+            multiplier: newMultiplier,
         });
     };
     
@@ -112,12 +119,21 @@ export default class App extends Component {
                         <Text style={styles.paragraph}>
                             Cookies Clicked: {this.state.count}
                         </Text>
+                         <Text style={styles.paragraph}>
+                            Multiplier: {this.state.multiplier}
+                        </Text>
                     </View>    
                 </View>
                 <View style={{ display: this.state.menuDisplay }}>
                     <View style={styles.cookieContainer}>
                         <Text style={styles.text}>
                             Cookies Pressed: {this.state.count}
+                         </Text>
+                         <Text style={styles.text}>
+                            Level: {this.state.level}
+                         </Text>
+                         <Text style={styles.text}>
+                            Multiplier: {this.state.multiplier}
                          </Text>
                          <Text style={styles.text}>
                             Time Played:
