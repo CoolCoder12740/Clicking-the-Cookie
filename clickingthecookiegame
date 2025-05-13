@@ -80,14 +80,14 @@ export default class App extends Component {
                     onPress={this.handleMainDisplayPress}
                     >
                         <Text style={styles.navButtonText}>
-                            blah blah
+                            Home
                         </Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.navButton}
                     onPress={this.handleMenuDisplayPress}
                     >
                         <Text style={styles.navButtonText}>
-                            blah 
+                            Stats 
                         </Text>
                     </TouchableHighlight>
                 </View>
