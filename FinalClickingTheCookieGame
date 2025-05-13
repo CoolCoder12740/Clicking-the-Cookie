@@ -1,0 +1,272 @@
+import React, { Component } from 'react';
+import { AppRegistry, Text, View, StyleSheet, Image, TextInput, TouchableOpacity, ImageBackground, TouchableHighlight, Alert, Dimensions, ScrollView, Button } from 'react-native';
+import Constants from 'expo-constants';
+
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
+
+
+export default class App extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = { 
+            count: 0,
+            level: 1,
+            mainDisplay: 'block',
+            menuDisplay: 'none',
+            cookie: 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c',
+            multiplier: 'x1',
+            secondsPlayed: 0
+        };
+        this.interval = null;
+    }
+    
+    componentDidMount() {
+        this.interval = setInterval(() => {
+        this.setState(prevState => ({
+        secondsPlayed: prevState.secondsPlayed + 1,
+    }));
+        }, 1000); // Every 1000ms = 1 second
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    
+    increaseCount = () => {
+        if (this.state.level == 1){
+            this.setState({ 
+                count: this.state.count + 1,
+            })
+        } else if (level == 2){
+            this.setState({ 
+                count: this.state.count + 1.5,
+            })
+        } else if (level == 3){
+            this.setState({ 
+                count: this.state.count + 2,
+            })
+        } else if (level == 4){
+            this.setState({ 
+                count: this.state.count + 4.32,
+            })
+        }
+        else if (level == 4){
+            this.setState({ 
+                count: this.state.count + 6.43,
+            })
+        }
+    };
+    
+    levelUp = () => {
+       let { count, level } = this.state;
+       
+        let increment = 1;
+        if (level === 2) increment = 2;
+        else if (level === 3) increment = 6;
+        else if (level === 4) increment = 10;
+        else if (level === 5) increment = 15;
+            
+        let newCount = count + increment;
+        let newLevel = 1;
+        let newMultiplier = 'x1';
+        let newCookie = 'https://codehs.com/uploads/a2dcbb0c63379d75f0c768112fcce66c';
+        if (newCount > 300) {
+            newLevel = 5;
+            newMultiplier = 'x15';
+            newCookie = 'https://www.freepnglogos.com/uploads/cookie-png/cookie-png-images-are-download-crazypngm-21.png';
+        } else if (newCount > 125) {
+            newLevel = 4;
+            newMultiplier = 'x10';
+            newCookie = 'https://static.vecteezy.com/system/resources/previews/054/314/888/non_2x/oreo-golden-crispy-cookie-free-png.png';
+        } else if (newCount > 50) {
+            newLevel = 3;
+            newMultiplier = 'x6';
+            newCookie = 'https://icon2.cleanpng.com/lnd/20240906/ts/abd7957c6eaaa7d2d4af252689ef23.webp';
+        } else if (newCount > 10) {
+            newLevel = 2;
+             newMultiplier = 'x2';
+            newCookie = 'https://www.sweetestmenu.com/wp-content/uploads/2019/03/whitechocolatechipcookies37aa.jpg';
+        }
+        this.setState({
+            count: newCount,
+            level: newLevel,
+            cookie: newCookie,
+            multiplier: newMultiplier,
+        });
+    };
+    
+    handleMainDisplayPress = () => this.setState(state => ({
+        mainDisplay: 'block',
+        menuDisplay: 'none',
+    }));
+    
+    handleMenuDisplayPress = () => this.setState(state => ({
+        mainDisplay: 'none',
+        menuDisplay: 'block',
+    }));
+    
+
+
+
+
+    render() {
+        const { count, secondsPlayed } = this.state;
+
+        const cookiesPerMinute = secondsPlayed > 0
+        ? (count / (secondsPlayed / 60)).toFixed(2)
+        : 0;
+    
+        return (
+            <View style={styles.container}>
+                
+                <View style={{ display: this.state.mainDisplay }}>
+                    <View style={styles.cookieContainer}>
+                        <Text style={styles.title}>
+                            Clicking the Cookie
+                        </Text>
+                    
+                      
+                        <TouchableHighlight
+                            onPress = {this.levelUp}
+                        >
+                           
+                              <Image
+                            source={{ uri: this.state.cookie }}
+                            style={{ height: 200, width: 200, padding: 70 }}
+                             onPress = {this.levelUp}
+                        />
+                
+                       
+                        </TouchableHighlight>
+                        
+               
+                        
+                        <Text style={styles.paragraph}>
+                            Cookies Clicked: {this.state.count}
+                        </Text>
+                         <Text style={styles.paragraph}>
+                            Multiplier: {this.state.multiplier}
+                        </Text>
+                    </View>    
+                </View>
+                <View style={{ display: this.state.menuDisplay }}>
+                    <View style={styles.cookieContainer}>
+                        <Text style={styles.text}>
+                            Cookies Pressed: {this.state.count}
+                         </Text>
+                         <Text style={styles.text}>
+                            Level: {this.state.level}
+                         </Text>
+                         <Text style={styles.text}>
+                            Multiplier: {this.state.multiplier}
+                         </Text>
+                         <Text style={styles.text}>Time Played: {this.state.secondsPlayed} seconds</Text>
+                        <Text style={styles.text}>
+                            Cookies Clicked per Minute: {cookiesPerMinute}
+                        </Text>
+                    </View>
+                </View>
+               <View style={styles.navbarContainer}>
+                    <TouchableHighlight style={styles.navButton}
+                    onPress={this.handleMainDisplayPress}
+                    >
+                        <Text style={styles.navButtonText}>
+                           Home
+                        </Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.navButton}
+                    onPress={this.handleMenuDisplayPress}
+                    >
+                        <Text style={styles.navButtonText}>
+                            Stats 
+                        </Text>
+                    </TouchableHighlight>
+                </View>
+            </View>
+      );
+   }
+   
+   
+}
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    
+    
+    container2: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+    timeText: { fontSize: 24, fontWeight: 'bold' },
+  
+  
+    titleContainer: {
+        width: deviceWidth,
+        height: deviceHeight/8
+    },
+    navbarContainer: {
+        width: deviceWidth,
+        height: deviceHeight/8,
+        backgroundColor: '#613613',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    cookieContainer: {
+        width: deviceWidth,
+        height: 7 * deviceHeight/8,
+        alignItems: 'center',
+        //justifyContent: 'center',
+        backgroundColor: '#997950',
+    },
+    navButton: {
+        height: deviceHeight/14,
+        width: deviceWidth/4,
+        backgroundColor: '#7C4700',
+        borderColor: 'white',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20,
+    },
+     navButtonText: {
+        fontSize: deviceHeight/40,
+        textAlign: 'center',
+        color: 'white',
+    },
+    cookie: {
+        height: 50,
+        width: 150,
+        backgroundColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        color: '#362312',
+        fontSize: 50,
+        fontWeight: 'bold',
+        marginBottom: 50,
+        alignItems: 'center',
+        
+    },
+    buttonText: {
+        color: 'teal',
+        fontSize: 25,
+        marginTop: 40,
+    },
+    text: {
+        color: 'black',
+        fontSize: 20,
+        justifyContent: 'center',
+        padding: 10,
+    },
+    paragraph: {
+        color: '#362312',
+        fontSize: 30,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        marginTop: 10,
+    },
+});
