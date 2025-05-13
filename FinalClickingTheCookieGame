@@ -82,11 +82,11 @@ export default class App extends Component {
         } else if (newCount > 50) {
             newLevel = 3;
             newMultiplier = 'x6';
-            newCookie = 'https://icon2.cleanpng.com/lnd/20240906/ts/abd7957c6eaaa7d2d4af252689ef23.webp';
+            newCookie = 'https://codehs.com/uploads/bbe032b645574c908c123c74337fb031';
         } else if (newCount > 10) {
             newLevel = 2;
              newMultiplier = 'x2';
-            newCookie = 'https://www.sweetestmenu.com/wp-content/uploads/2019/03/whitechocolatechipcookies37aa.jpg';
+            newCookie = 'https://codehs.com/uploads/6cdd0eadeccade15f16844442fcebfec';
         }
         this.setState({
             count: newCount,
